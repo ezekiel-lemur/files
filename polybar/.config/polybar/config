@@ -1,0 +1,141 @@
+[colors]
+
+foreground = #dfdfdf
+background = #aa000000
+alert = #fb4934
+white = #fafafa
+;----------------------------------------------
+
+[bar/main]
+width = 100%
+height = 27
+fixed-centre = false 
+
+locale = en_US.UTF-8
+
+padding-left = 0
+padding-right = 1
+
+module-margin-left = 1
+module-margin-right = 1
+
+modules-right = date time volume backlight battery 
+modules-center = spotify 
+modules-left = i3  
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+underline-size = 0
+underline-color = ${colors.background}
+
+tray-padding = 2
+tray-transparent = false
+tray-scale = 1.0
+
+font-0 = "monospace:size=9;2"
+font-1 = "FontAwesome:size=8;2"
+
+;----------------------
+
+[module/spotify]
+type = custom/script
+exec = .config/polybar/spotify_p.sh
+tail = true
+interval = 2
+
+
+
+[module/i3]
+type = internal/i3
+format = <label-state> <label-mode>
+strip-wsnumbers = true
+index-sort = true
+wrapping-scroll = false
+
+label-focused = %name%
+label-focused-background = #883c3c3c
+label-focused-underline= #883c3c3c
+label-focused-padding = 2
+
+label-unfocused = %name%
+label-unfocused-padding = 2
+
+label-occupied = %name%
+label-occupied-padding = 2
+
+label-urgent = %name%
+label-urgent-background = ${colors.alert}
+label-urgent-padding = 2
+
+label-empty = %name%
+label-empty-foreground = #44ffffff
+label-empty-padding = 2
+
+label-visible = %name%
+label-visible-background = ${colors.background}
+label-visible-padding = ${self.label-focused-padding}
+
+
+[module/backlight]
+type = internal/xbacklight
+enable-scroll = true
+label =  %percentage%%
+format = <label> 
+format-padding = 1
+
+[module/volume]
+type = internal/volume
+format-volume = <label-volume> 
+format-volume-padding = 1
+format-volume-underline = ${colors.white}
+label-volume =  %percentage:1%%
+label-muted =  0%
+format-muted = <label-muted>
+format-muted-underline = ${colors.white}
+format-muted-padding = 1
+
+
+[module/battery]
+type = internal/battery
+full-at = 99
+battery = BAT0
+adapter = AC
+
+format-charging = <animation-charging> <label-charging>
+format-discharging = <ramp-capacity> <label-discharging>
+format-full = <ramp-capacity> <label-full>
+
+label-charging = %percentage%% 
+label-discharging = %percentage%% 
+label-full = 100%
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+animation-charging-framerate = 150
+
+format-charging-padding = 1
+format-discharging-padding = 1
+format-full-padding = 1
+
+
+[module/time]
+type = custom/script
+exec = date +" %T"
+interval = 1
+format-padding = 1
+
+[module/date]
+type = custom/script
+exec = date +" %A%e"
+interval = 1
+format-padding = 1

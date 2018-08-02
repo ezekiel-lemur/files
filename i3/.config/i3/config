@@ -1,0 +1,173 @@
+#Ezekiel's .files , thank you Yolan for the original config that this one extensivley borrowed from. 
+
+#Rise & Shine
+exec --no-startup-id feh --randomize --bg-fill ~/Pictures/Pictures/* 
+exec always --no-startup-id xset s off
+exec always --no-startupid xset -dpms
+exec always --on-startupid polyp.sh
+exec always --on-startupid setxkbmap us
+exec_always --no-startup-id polybar main &
+exec always --no-startup-id thunar --daemon
+
+#windows decoration
+new_window pixel 0
+
+#mod key
+set $mod Mod4
+
+# Font 
+font pango:monospace 8
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# start a terminal
+bindsym $mod+Return exec termite
+
+# start a browser
+bindsym $mod+o exec vivaldi-stable
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# start rofi
+bindsym $mod+d exec "rofi -show drun -lines 15  " 
+bindsym $mod+Shift+d exec "rofi -show window -lines 10  "
+
+# change focus
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+#resize
+bindsym $mod+Ctrl+Right resize shrink width 1 px or 1 ppt
+bindsym $mod+Ctrl+Up resize grow height 1 px or 1 ppt
+bindsym $mod+Ctrl+Down resize shrink height 1 px or 1 ppt
+bindsym $mod+Ctrl+Left resize grow width 1 px or 1 ppt
+
+# split in horizontal orientation
+bindsym $mod+h split h
+# split in vertical orientation
+bindsym $mod+v split 
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+t layout tabbed
+bindsym $mod+z layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+q focus parent
+
+# focus the child container
+#bindsym $mod+d focus child
+
+#bindsym $mod+Shift+Tab exec oblogout
+
+# Create Log out, Reboot, Poweroff bindings
+mode "E S R P" {
+        bindsym $mod+r exec systemctl reboot
+        bindsym $mod+p exec poweroff
+        bindsym $mod+s exec systemctl suspend
+        bindsym $mod+Shift+e exit
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+
+bindsym $mod+Shift+e mode "E S R P"
+
+
+#display 
+#pc
+exec --no-startup-id xrandr --output HDMI1 --off --output VIRTUAL1 --off --output VGA1 --mode 1366x768 --pos 0x0 --rotate normal
+#thinkpad
+
+#Workspace 
+set $WS1 "1: 1" 
+set $WS2 "2: 2" 
+set $WS3 "3: 3" 
+set $WS4 "4: 4"
+set $WS5 "5: 5"
+set $WS6 "6: 6" 
+set $WS7 "7: 7"
+set $WS8 "8: 8"
+set $WS9 "9: 9"
+set $WS0 "10: 10"
+
+# switch to workspace
+bindsym $mod+1 workspace $WS1 
+bindsym $mod+2 workspace $WS2
+bindsym $mod+3 workspace $WS3 
+bindsym $mod+4 workspace $WS4 
+bindsym $mod+5 workspace $WS5 
+bindsym $mod+6 workspace $WS6
+bindsym $mod+7 workspace $WS7
+bindsym $mod+8 workspace $WS8 
+bindsym $mod+9 workspace $WS9 
+bindsym $mod+0 workspace $WS0 
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $WS1
+bindsym $mod+Shift+2 move container to workspace $WS2
+bindsym $mod+Shift+3 move container to workspace $WS3
+bindsym $mod+Shift+4 move container to workspace $WS4
+bindsym $mod+Shift+5 move container to workspace $WS5
+bindsym $mod+Shift+6 move container to workspace $WS6
+bindsym $mod+Shift+7 move container to workspace $WS7
+bindsym $mod+Shift+9 move container to workspace $WS9
+bindsym $mod+Shift+0 move container to workspace $WS0
+
+
+
+bindsym $mod+Shift+c reload
+
+bindsym $mod+Shift+r restart 
+
+#gaps 
+gaps inner 8
+gaps outer 13
+
+exec_always compton
+
+# class                 border 	bground text    indicator child_border
+client.focused          #3c3c3c88 #3c3c3c88 #FAFAFA #FFFFFF   #3c3c3c88
+client.focused_inactive #3c3c3c88 #3c3c3c88 #FAFAFA #FFFFFF   #3c3c3c88
+client.unfocused        #000000aa #000000aa #FAFAFA #000000aa   #000000aa
+client.urgent           #FB4934 #FB4934 #FAFAFA #FFFFFF   #FB4934
+client.placeholder      #000000 #070015 #D064F6 #FFFFFF   #0C0C0C
+
+
+# Pulse Audio controls
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +1% 
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -1% 
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
+
+
+# Sreen brightness controls
+exec_always xbacklight
+bindsym XF86MonBrightnessUp exec xbacklight -inc 5 # increase screen brightness
+bindsym XF86MonBrightnessDown exec xbacklight -dec 5 # decrease screen brightness
+
+
+# Media player controls
+bindsym XF86AudioPlay exec playerctl play
+bindsym XF86AudioStop exec playerctl pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
